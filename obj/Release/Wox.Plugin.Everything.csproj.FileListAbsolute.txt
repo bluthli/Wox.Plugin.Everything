@@ -1,0 +1,7 @@
+E:\github\Wox\Output\Release\Plugins\Wox.Plugin.Everything\x64\Everything.dll
+E:\github\Wox\Output\Release\Plugins\Wox.Plugin.Everything\x86\Everything.dll
+E:\github\Wox\Output\Release\Plugins\Wox.Plugin.Everything\plugin.json
+E:\github\Wox\Output\Release\Plugins\Wox.Plugin.Everything\Wox.Plugin.Everything.dll
+E:\github\Wox\Output\Release\Plugins\Wox.Plugin.Everything\Wox.Plugin.Everything.pdb
+E:\github\Wox\Plugins\Wox.Plugin.Everything\obj\Release\Wox.Plugin.Everything.dll
+E:\github\Wox\Plugins\Wox.Plugin.Everything\obj\Release\Wox.Plugin.Everything.pdb

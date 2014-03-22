@@ -1,0 +1,15 @@
+e:\github\Wox\Debug\Plugins\Wox.Plugin.Everything\x64\Everything.dll
+e:\github\Wox\Debug\Plugins\Wox.Plugin.Everything\x86\Everything.dll
+e:\github\Wox\Debug\Plugins\Wox.Plugin.Everything\plugin.json
+e:\github\Wox\Debug\Plugins\Wox.Plugin.Everything\Wox.Plugin.Everything.dll
+e:\github\Wox\Debug\Plugins\Wox.Plugin.Everything\Wox.Plugin.Everything.pdb
+e:\github\Wox\Plugins\Wox.Plugin.Everything\obj\Debug\Wox.Plugin.Everything.dll
+e:\github\Wox\Plugins\Wox.Plugin.Everything\obj\Debug\Wox.Plugin.Everything.pdb
+e:\github\Wox\Plugins\Wox.Plugin.Everything\obj\Debug\Wox.Plugin.Everything.csprojResolveAssemblyReference.cache
+e:\github\Wox\Output\Debug\Plugins\Wox.Plugin.Everything\x64\Everything.dll
+e:\github\Wox\Output\Debug\Plugins\Wox.Plugin.Everything\x86\Everything.dll
+e:\github\Wox\Output\Debug\Plugins\Wox.Plugin.Everything\plugin.json
+e:\github\Wox\Output\Debug\Plugins\Wox.Plugin.Everything\Wox.Plugin.Everything.dll
+e:\github\Wox\Output\Debug\Plugins\Wox.Plugin.Everything\Wox.Plugin.Everything.pdb
+E:\github\Wox\Output\Debug\Plugins\Wox.Plugin.Everything\Images\folder.png
+E:\github\Wox\Output\Debug\Plugins\Wox.Plugin.Everything\Images\image.png
