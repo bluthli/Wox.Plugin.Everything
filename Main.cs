@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Wox.Plugin.Everything
 {
     public class Main : IPlugin
     {
-        Wox.Plugin.PluginInitContext context;
+        PluginInitContext context;
         EverythingAPI api = new EverythingAPI();
         private static List<string> imageExts = new List<string>() { ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".ico" };
 
@@ -29,8 +26,8 @@ namespace Wox.Plugin.Everything
                     r.IcoPath = GetIconPath(s);
                     r.Action = (c) =>
                     {
-                        context.HideApp();
-                        context.ShellRun(path);
+                        context.API.HideApp();
+                        context.API.ShellRun(path);
                         return true;
                     };
                     results.Add(r);
@@ -61,15 +58,14 @@ namespace Wox.Plugin.Everything
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern int LoadLibrary(string name);
 
-        public void Init(Wox.Plugin.PluginInitContext context)
+        public void Init(PluginInitContext context)
         {
             this.context = context;
 
             LoadLibrary(Path.Combine(
-                Path.Combine(context.CurrentPluginMetadata.PluginDirecotry, (IntPtr.Size == 4) ? "x86" : "x64"),
+                Path.Combine(context.CurrentPluginMetadata.PluginDirectory, (IntPtr.Size == 4) ? "x86" : "x64"),
                 "Everything.dll"
             ));
-            //init everything
         }
     }
 }
