@@ -7,5 +7,6 @@
     "Version":"1.0.1",
     "Language":"csharp",
     "Website":"http://www.getwox.com",
+    "IcoPath":"Images\\find.png",
     "ExecuteFileName":"Wox.Plugin.Everything.dll"
 }
