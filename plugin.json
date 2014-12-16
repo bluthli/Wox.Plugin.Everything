@@ -1,9 +1,9 @@
 {
     "ID":"D2D2C23B084D411DB66FE0C79D6C2A6E",
-    "ActionKeyword":"ev",
-    "Name":"Wox.Plugin.Everything",
+    "ActionKeyword":"f",
+    "Name":"Everything",
     "Description":"Search Everything",
-    "Author":"orzfly",
+    "Author":"qianlifeng,orzfly",
     "Version":"1.0.1",
     "Language":"csharp",
     "Website":"http://www.getwox.com",

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Wox.Plugin.Everything.Everything;
 
 namespace Wox.Plugin.Everything
 {

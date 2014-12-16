@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using Wox.Plugin.Everything.Everything.Exceptions;
 
-namespace Wox.Plugin.Everything
+namespace Wox.Plugin.Everything.Everything
 {
     public sealed class EverythingAPI
     {
-
-        #region Const
-        const string EVERYTHING_DLL_NAME = "Everything.dll";
-        #endregion
-
         #region DllImport
         [DllImport(EVERYTHING_DLL_NAME)]
         private static extern int Everything_SetSearch(string lpSearchString);
@@ -76,7 +71,7 @@ namespace Wox.Plugin.Everything
         private static extern void Everything_Reset();
         #endregion
 
-        #region Enum
+        const string EVERYTHING_DLL_NAME = "Everything.dll";
         enum StateCode
         {
             OK,
@@ -88,9 +83,6 @@ namespace Wox.Plugin.Everything
             InvalidIndexError,
             InvalidCallError
         }
-        #endregion
-
-        #region Property
 
         /// <summary>
         /// Gets or sets a value indicating whether [match path].
@@ -155,9 +147,7 @@ namespace Wox.Plugin.Everything
                 Everything_SetRegex(value);
             }
         }
-        #endregion
 
-        #region Public Method
         /// <summary>
         /// Resets this instance.
         /// </summary>
@@ -264,68 +254,5 @@ namespace Wox.Plugin.Everything
                 yield return result;
             }
         }
-        #endregion
-    }
-
-    public enum ResultType
-    {
-        Volume,
-        Folder,
-        File
-    }
-
-    public class SearchResult
-    {
-        public string FullPath { get; set; }
-        public ResultType Type { get; set; }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class MemoryErrorException : ApplicationException
-    {
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class IPCErrorException : ApplicationException
-    {
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class RegisterClassExException : ApplicationException
-    {
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class CreateWindowException : ApplicationException
-    {
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class CreateThreadException : ApplicationException
-    {
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class InvalidIndexException : ApplicationException
-    {
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class InvalidCallException : ApplicationException
-    {
     }
 }

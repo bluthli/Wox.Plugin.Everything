@@ -45,8 +45,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Everything\Exceptions\CreateThreadException.cs" />
+    <Compile Include="Everything\Exceptions\CreateWindowException.cs" />
+    <Compile Include="Everything\EverythingAPI.cs" />
+    <Compile Include="Everything\Exceptions\MemoryErrorException.cs" />
+    <Compile Include="Everything\Exceptions\InvalidCallException.cs" />
+    <Compile Include="Everything\Exceptions\InvalidIndexException.cs" />
+    <Compile Include="Everything\Exceptions\IPCErrorException.cs" />
+    <Compile Include="Everything\Exceptions\RegisterClassExException.cs" />
+    <Compile Include="Everything\ResultType.cs" />
+    <Compile Include="Everything\SearchResult.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="EverythingAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

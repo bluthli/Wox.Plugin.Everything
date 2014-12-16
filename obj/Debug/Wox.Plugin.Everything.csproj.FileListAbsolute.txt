@@ -32,3 +32,14 @@ e:\github\Wox.Plugin.Everything\bin\Wox.Plugin.Everything.dll
 e:\github\Wox.Plugin.Everything\bin\Wox.Plugin.Everything.pdb
 e:\github\Wox.Plugin.Everything\bin\Wox.Plugin.dll
 e:\github\Wox.Plugin.Everything\bin\Wox.Plugin.pdb
+d:\Personal\Github\Wox.Plugin.Everything\bin\Images\folder.png
+d:\Personal\Github\Wox.Plugin.Everything\bin\Images\image.png
+d:\Personal\Github\Wox.Plugin.Everything\bin\x64\Everything.dll
+d:\Personal\Github\Wox.Plugin.Everything\bin\x86\Everything.dll
+d:\Personal\Github\Wox.Plugin.Everything\bin\plugin.json
+d:\Personal\Github\Wox.Plugin.Everything\bin\Wox.Plugin.Everything.dll
+d:\Personal\Github\Wox.Plugin.Everything\bin\Wox.Plugin.Everything.pdb
+d:\Personal\Github\Wox.Plugin.Everything\bin\Wox.Plugin.dll
+d:\Personal\Github\Wox.Plugin.Everything\bin\Wox.Plugin.pdb
+d:\Personal\Github\Wox.Plugin.Everything\obj\Debug\Wox.Plugin.Everything.dll
+d:\Personal\Github\Wox.Plugin.Everything\obj\Debug\Wox.Plugin.Everything.pdb
