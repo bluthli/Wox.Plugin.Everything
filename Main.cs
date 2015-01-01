@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Wox.Infrastructure;
 using Wox.Plugin.Everything.Everything;
 
 namespace Wox.Plugin.Everything
@@ -10,28 +12,68 @@ namespace Wox.Plugin.Everything
         PluginInitContext context;
         EverythingAPI api = new EverythingAPI();
         private static List<string> imageExts = new List<string>() { ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".ico" };
+        private static List<string> executableExts = new List<string>() { ".exe" };
 
         public List<Result> Query(Query query)
         {
             var results = new List<Result>();
             if (query.ActionParameters.Count > 0 && query.ActionParameters[0].Length > 0)
             {
-                var keyword = string.Join(" ", query.ActionParameters.ToArray());
-                var enumerable = api.Search(keyword, 0, 100);
-                foreach (var s in enumerable)
+                var keyword = query.GetAllRemainingParameter();
+                if (ContextMenuStorage.Instance.MaxSearchCount <= 0)
                 {
-                    var path = s.FullPath;
-                    Result r  = new Result();
-                    r.Title = Path.GetFileName(path);
-                    r.SubTitle = path;
-                    r.IcoPath = GetIconPath(s);
-                    r.Action = (c) =>
+                    ContextMenuStorage.Instance.MaxSearchCount = 100;
+                     ContextMenuStorage.Instance.Save();
+                }
+
+                try
+                {
+                    var searchList = api.Search(keyword, maxCount: ContextMenuStorage.Instance.MaxSearchCount).ToList();
+                    var fuzzyMather = FuzzyMatcher.Create(keyword);
+                    searchList.Sort(
+                        (x, y) =>
+                            fuzzyMather.Evaluate(Path.GetFileName(y.FullPath)).Score -
+                            fuzzyMather.Evaluate(Path.GetFileName(x.FullPath)).Score);
+
+                    foreach (var s in searchList)
                     {
-                        context.API.HideApp();
-                        context.API.ShellRun(path);
-                        return true;
-                    };
-                    results.Add(r);
+                        var path = s.FullPath;
+                        Result r = new Result();
+                        r.Title = Path.GetFileName(path);
+                        r.SubTitle = path;
+                        r.IcoPath = GetIconPath(s);
+                        r.Action = (c) =>
+                        {
+                            context.API.HideApp();
+                            context.API.ShellRun(path);
+                            return true;
+                        };
+                        r.ContextMenu = GetContextMenu(s);
+                        results.Add(r);
+                    }
+                }
+                catch (IPCErrorException)
+                {
+                    results.Add(new Result()
+                    {
+                        Title = "Everything is not running",
+                        IcoPath = "Images\\warning.png"
+                    });
+                }
+                catch (Exception e)
+                {
+                    results.Add(new Result()
+                    {
+                        Title = "Everything plugin has an error (enter to copy error message)",
+                        SubTitle = e.Message,
+                        Action = _ =>
+                        {
+                            System.Windows.Clipboard.SetText(e.Message + "\r\n" +e.StackTrace);
+                            context.API.ShowMsg("Copied","Error message has copied to your clipboard",string.Empty);
+                            return false;
+                        },
+                        IcoPath = "Images\\error.png"
+                    });
                 }
             }
 
@@ -42,22 +84,61 @@ namespace Wox.Plugin.Everything
 
         private string GetIconPath(SearchResult s)
         {
+            var ext = Path.GetExtension(s.FullPath);
             if (s.Type == ResultType.Folder)
             {
                 return "Images\\folder.png";
             }
-            else
+            else if (!string.IsNullOrEmpty(ext))
             {
-                var ext = Path.GetExtension(s.FullPath);
-                if (!string.IsNullOrEmpty(ext) && imageExts.Contains(ext.ToLower()))
+                if (imageExts.Contains(ext.ToLower()))
+                {
                     return "Images\\image.png";
-                else
+                }
+                else if (executableExts.Contains(ext.ToLower()))
+                {
                     return s.FullPath;
+                }
             }
+
+            return "Images\\file.png";
         }
-        
+
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern int LoadLibrary(string name);
+
+        private List<Result> GetContextMenu(SearchResult record)
+        {
+            List<Result> contextMenus = new List<Result>();
+
+            if (record.Type == ResultType.File)
+            {
+                foreach (ContextMenu contextMenu in ContextMenuStorage.Instance.ContextMenus)
+                {
+                    contextMenus.Add(new Result()
+                    {
+                        Title = contextMenu.Name,
+                        Action = _ =>
+                        {
+                            string argument = contextMenu.Argument.Replace("{path}", record.FullPath);
+                            try
+                            {
+                                System.Diagnostics.Process.Start(contextMenu.Command, argument);
+                            }
+                            catch
+                            {
+                                context.API.ShowMsg("Can't start " + record.FullPath, string.Empty, string.Empty);
+                                return false;
+                            }
+                            return true;
+                        },
+                        IcoPath = contextMenu.ImagePath
+                    });
+                }
+            }
+
+            return contextMenus;
+        }
 
         public void Init(PluginInitContext context)
         {

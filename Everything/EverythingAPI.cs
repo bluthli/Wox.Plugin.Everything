@@ -156,16 +156,6 @@ namespace Wox.Plugin.Everything.Everything
             Everything_Reset();
         }
 
-        /// <summary>
-        /// Searches the specified key word.
-        /// </summary>
-        /// <param name="keyWord">The key word.</param>
-        /// <returns></returns>
-        public IEnumerable<SearchResult> Search(string keyWord)
-        {
-            return Search(keyWord, 0, int.MaxValue);
-        }
-
         private void no()
         {
             switch (Everything_GetLastError())
@@ -194,7 +184,7 @@ namespace Wox.Plugin.Everything.Everything
         /// <param name="offset">The offset.</param>
         /// <param name="maxCount">The max count.</param>
         /// <returns></returns>
-        public IEnumerable<SearchResult> Search(string keyWord, int offset, int maxCount)
+        public IEnumerable<SearchResult> Search(string keyWord, int offset = 0, int maxCount = 100)
         {
             if (string.IsNullOrEmpty(keyWord))
                 throw new ArgumentNullException("keyWord");
