@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using Wox.Infrastructure.Storage;
+using System.IO;
+using System.Reflection;
 
 namespace Wox.Plugin.Everything
 {
@@ -12,12 +14,18 @@ namespace Wox.Plugin.Everything
         [JsonProperty]
         public List<ContextMenu> ContextMenus = new List<ContextMenu>();
 
+
         [JsonProperty]
         public int MaxSearchCount { get; set; }
 
         protected override string ConfigName
         {
             get { return "EverythingContextMenu"; }
+        }
+
+        protected override string ConfigFolder
+        {
+            get { return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); }
         }
 
         protected override ContextMenuStorage LoadDefault()

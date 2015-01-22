@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Wox.Infrastructure;
+using System.Reflection;
 using Wox.Plugin.Everything.Everything;
 
 namespace Wox.Plugin.Everything
@@ -23,7 +25,7 @@ namespace Wox.Plugin.Everything
                 if (ContextMenuStorage.Instance.MaxSearchCount <= 0)
                 {
                     ContextMenuStorage.Instance.MaxSearchCount = 100;
-                     ContextMenuStorage.Instance.Save();
+                    ContextMenuStorage.Instance.Save();
                 }
 
                 try
@@ -54,9 +56,10 @@ namespace Wox.Plugin.Everything
                 }
                 catch (IPCErrorException)
                 {
+                    StartEverything();
                     results.Add(new Result()
                     {
-                        Title = "Everything is not running",
+                        Title = "Everything is not running, we already run it for you now. Try search again",
                         IcoPath = "Images\\warning.png"
                     });
                 }
@@ -68,8 +71,8 @@ namespace Wox.Plugin.Everything
                         SubTitle = e.Message,
                         Action = _ =>
                         {
-                            System.Windows.Clipboard.SetText(e.Message + "\r\n" +e.StackTrace);
-                            context.API.ShowMsg("Copied","Error message has copied to your clipboard",string.Empty);
+                            System.Windows.Clipboard.SetText(e.Message + "\r\n" + e.StackTrace);
+                            context.API.ShowMsg("Copied", "Error message has copied to your clipboard", string.Empty);
                             return false;
                         },
                         IcoPath = "Images\\error.png"
@@ -148,6 +151,32 @@ namespace Wox.Plugin.Everything
                 Path.Combine(context.CurrentPluginMetadata.PluginDirectory, (IntPtr.Size == 4) ? "x86" : "x64"),
                 "Everything.dll"
             ));
+
+            StartEverything();
+        }
+
+        private void StartEverything()
+        {
+            if (!CheckEverythingIsRunning())
+            {
+                Process p = new Process();
+                p.StartInfo.Verb = "runas";
+                p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                p.StartInfo.FileName = GetEverythingPath();
+                p.StartInfo.UseShellExecute = true;
+                p.Start();
+            }
+        }
+
+        private bool CheckEverythingIsRunning()
+        {
+            return Process.GetProcessesByName("Everything").Length > 0;
+        }
+
+        private string GetEverythingPath()
+        {
+            string everythingFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "PortableEverything");
+            return Path.Combine(everythingFolder, "Everything.exe");
         }
     }
 }
